@@ -1,0 +1,22 @@
+.dish-wrapper {
+  height: 120px;
+  width: 70%;
+  background-color: aqua;
+  margin-top: 10px;
+  display: flex;
+}
+
+.dish-image {
+  height: 100%;
+  width: 30%;
+  background-color: yellow;
+}
+
+.dish-image img {
+  height: 100%;
+  width: 100%;
+}
+.dish-description {
+  height: 100%;
+  width: 70%;
+}

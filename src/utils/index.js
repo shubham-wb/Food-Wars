@@ -1,2 +1,2 @@
-import { getUser } from "./helperFunctions";
-export { getUser };
+import { getUser, getDishes } from "./helperFunctions";
+export { getUser, getDishes };
