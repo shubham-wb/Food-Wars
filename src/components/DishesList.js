@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getDishes } from "../utils";
-import { Dish } from "./Dish";
+import Dish from "./Dish";
 
 function DishesList() {
   let [dishesList, setDishesList] = useState([]);

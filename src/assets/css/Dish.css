@@ -1,6 +1,6 @@
 .dish-wrapper {
-  height: 120px;
-  width: 70%;
+  height: 150px;
+  width: 90%;
   background-color: aqua;
   margin-top: 10px;
   display: flex;
@@ -17,6 +17,10 @@
   width: 100%;
 }
 .dish-description {
+  height: 70%;
+  width: 100%;
+}
+.dish-ranking {
   height: 100%;
-  width: 70%;
+  width: 20%;
 }

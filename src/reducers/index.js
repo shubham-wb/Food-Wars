@@ -1,9 +1,9 @@
-import { USER_LOGIN } from "../actions";
+import { USER_LOGIN, ADD_DATA_TO_STATE } from "../actions";
+
 let initialState = {
   userLoggedin: {},
   users: {},
   dishes: {},
-  dishesScore: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,6 +12,14 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.user,
+      };
+    }
+    case ADD_DATA_TO_STATE: {
+      return {
+        ...state,
+        userLoggedin: action.loggedin || {},
+        users: action.users || {},
+        dishes: action.dishes || {},
       };
     }
     default: {
