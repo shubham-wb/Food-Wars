@@ -6,13 +6,18 @@ import Home from "./Home";
 import ScoreBoard from "./ScoreBoard";
 import DashBoard from "./DashBoard";
 import Page404 from "./Page404";
-import { addToState } from "../actions";
+import { addToState, addDishesToState } from "../actions";
 import { PrivateRoute, RestrictedRoute } from "./authenticatedRoute";
+import { getUsers } from "../utils";
+import { getDishes } from "../utils";
+
 var CryptoJS = require("crypto-js");
 
 function App(props) {
   //add from localstorage to redux state
   useEffect(() => {
+    props.addDishesToState(getDishes()); //get dishes and display on dashboard
+
     //get details of user loggedin
     let user = localStorage.getItem("user");
     if (user != null) {
@@ -21,9 +26,18 @@ function App(props) {
     }
     //get the rannkings of users
     let users = localStorage.getItem("users");
+    var usersChoices;
     if (users != null) {
       var users_bytes = CryptoJS.AES.decrypt(users, "ohmyfood"); //decrypt userdetails
-      var usersChoices = JSON.parse(users_bytes.toString(CryptoJS.enc.Utf8));
+      usersChoices = JSON.parse(users_bytes.toString(CryptoJS.enc.Utf8));
+    } else {
+      usersChoices = getUsers();
+      console.log(users);
+      var ciphertext = CryptoJS.AES.encrypt(
+        JSON.stringify(usersChoices),
+        "ohmyfood"
+      ).toString();
+      localStorage.setItem("users", ciphertext);
     }
     //get the scores of dishes
     let dishes = localStorage.getItem("dishes");
@@ -69,4 +83,4 @@ const mapStateToProps = (state) => {
   const { userLoggedin } = state;
   return userLoggedin;
 };
-export default connect(mapStateToProps, { addToState })(App);
+export default connect(mapStateToProps, { addToState, addDishesToState })(App);

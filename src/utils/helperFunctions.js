@@ -18,3 +18,10 @@ export function getDishes() {
     return false;
   }
 }
+export function getUsers() {
+  if (users) {
+    return users;
+  } else {
+    return false;
+  }
+}
