@@ -54,7 +54,6 @@ function MyRankings(props) {
                 .map((dish, index) => (
                   <div className='rank-element' key={`mydish-${index}`}>
                     {dish.dishName}
-                    {dish.rank}
                   </div>
                 ))
             : null}
