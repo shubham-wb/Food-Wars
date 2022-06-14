@@ -19,11 +19,12 @@ export function addToState(loggedin, users, dishes) {
   };
 }
 
-export function updateUser(user) {
-  console.log(user);
+export function updateUser(dishId, rank) {
+  console.log(dishId, rank);
   return {
     type: UPDATE_USER_CHOICE,
-    user,
+    dishId,
+    rank,
   };
 }
 

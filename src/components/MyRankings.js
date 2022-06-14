@@ -1,16 +1,29 @@
 import React from "react";
-
-function MyRankings() {
+import { connect } from "react-redux";
+function MyRankings(props) {
+  const { userLoggedin } = props;
+  console.log(userLoggedin, "myrank");
   return (
     <div>
       <div>My Rankings</div>
+
       <div>
-        <li>1.</li>
-        <li>2.</li>
-        <li>3.</li>
+        {userLoggedin.dishes
+          ? userLoggedin.dishes.map((dish, index) => (
+              <div key={`mydish-${index}`}>
+                {dish.dishName}
+                {dish.rank}
+              </div>
+            ))
+          : null}
       </div>
     </div>
   );
 }
-
-export default MyRankings;
+const mapStateToProps = (state) => {
+  const { userLoggedin } = state;
+  return {
+    userLoggedin,
+  };
+};
+export default connect(mapStateToProps)(MyRankings);

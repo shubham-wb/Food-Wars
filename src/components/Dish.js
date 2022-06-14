@@ -48,10 +48,6 @@ function Dish(props) {
   }
   const handleGiveRank = (rank) => {
     if (userLoggedin.dishes) {
-      if (userLoggedin.dishes.length === 3) {
-        return;
-      }
-
       let dishToUpdate = userLoggedin.dishes.find(
         (elem) => elem.id === props.dish.id
       );
@@ -74,7 +70,7 @@ function Dish(props) {
     if (users) {
       let filteredUsers = users.filter((elem) => elem.id !== userLoggedin.id);
       let updatedUsers = [...filteredUsers, userLoggedin];
-      console.log(updatedUsers);
+
       var ciphertext = CryptoJS.AES.encrypt(
         JSON.stringify(updatedUsers),
         "ohmyfood"
@@ -87,7 +83,7 @@ function Dish(props) {
       "ohmyfood"
     ).toString();
     localStorage.setItem("user", ciphertext);
-    updateUser(userLoggedin);
+    updateUser(dish.id, rank);
     //add to the local storage
   }; //handle post rank submits
 
@@ -146,4 +142,4 @@ export const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Dish);
+export default connect(mapStateToProps, { updateUser })(Dish);
