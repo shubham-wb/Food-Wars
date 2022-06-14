@@ -74,8 +74,9 @@ nav {
   align-items: center;
 }
 .logo img {
-  height: 70%;
-  width: 20%;
+  margin: 0px 10px;
+  height: 40px;
+  width: 40px;
 }
 .logo h2 {
   font-size: 1.5rem;

@@ -10,15 +10,12 @@ import Navbar from "./Navbar";
 import { addToState, addDishesToState } from "../actions";
 import { PrivateRoute, RestrictedRoute } from "./authenticatedRoute";
 import { getUsers } from "../utils";
-import { getDishes } from "../utils";
 
 var CryptoJS = require("crypto-js");
 
 function App(props) {
   //add from localstorage to redux state
   useEffect(() => {
-    props.addDishesToState(getDishes()); //get dishes and display on dashboard
-
     //get details of user loggedin
     let user = localStorage.getItem("user");
     if (user != null) {

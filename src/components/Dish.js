@@ -1,100 +1,76 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { connect } from "react-redux";
 import "../assets/css/Dish.css";
-import { updateUser } from "../actions";
+import { updateUser, updateDishScore } from "../actions";
 import gold from "../assets/images/gold.png";
 import silver from "../assets/images/silver.png";
 import bronze from "../assets/images/bronze.png";
+
 var CryptoJS = require("crypto-js");
 
 function Dish(props) {
-  let [showRating, setShowRating] = useState(true);
   let { userLoggedin, users } = props;
   const { dish } = props;
-  let [rank, setRank] = useState(0);
 
-  //get if user has already selected 3 items then disable options for selecting
-  //excpet for those which are selected by user
-  useEffect(() => {
-    if (userLoggedin.dishes) {
-      if (userLoggedin.dishes.length === 3) {
-        if (dish.id === userLoggedin.dishes[0].id) {
-          setShowRating(true);
-        } else if (dish.id === userLoggedin.dishes[1].id) {
-          setShowRating(true);
-        } else if (dish.id === userLoggedin.dishes[2].id) {
-          setShowRating(true);
-        } else {
-          setShowRating(false);
-        }
-      } else {
-        setShowRating(true);
-      }
+  function handleGiveRank(data) {
+    console.log(data, "data");
+    console.log(userLoggedin, "user_logged_in");
+    //if user has not selected any dishes
+    if (!userLoggedin.dishes) {
+      userLoggedin.dishes = [];
+      userLoggedin.dishes[data.rank] = data.id;
+      console.log(users, userLoggedin, "if user has not selected any dishes");
+
+      props.updateDishScore(null, { id: data.id, rank: data.rank * 10 }); //update overall scores of dishes
     }
-  }, [userLoggedin.dishes, dish.id]);
-
-  //function to highlight the selected rank of particular rank
-  function highlightSelected(rank) {
-    if (userLoggedin.dishes) {
-      let dish = userLoggedin.dishes.find((elem) => elem.id === props.dish.id);
-      if (dish) {
-        if (dish.rank === rank) {
-          return { backgroundColor: "gold", marginTop: "5px" };
-        } else {
-          return {
-            backgroundColor: "white",
-            color: "black",
-            border: "solid 2px blue",
-            marginTop: "5px",
-          };
-        }
+    //if user has dishes
+    else {
+      let old_value = userLoggedin.dishes[data.rank];
+      //if user unselected the dish
+      if (old_value === data.id) {
+        console.log(userLoggedin.dishes, "dekh ");
+        userLoggedin.dishes.splice(data.rank);
+        console.log(users, userLoggedin, " //if user unselected the dish");
+        props.updateDishScore({ id: old_value, score: data.rank * -10 }, null); //update overall scores of dishes
       }
-    }
-  }
-
-  //function to handle giving ranks
-  const handleGiveRank = (rank) => {
-    if (userLoggedin.dishes) {
-      let dishToUpdate = userLoggedin.dishes.find(
-        (elem) => elem.id === props.dish.id
-      ); //find dish selected in user data if exists
-      if (dishToUpdate) {
-        let filteredDishesArray = userLoggedin.dishes.filter(
-          (elem) => elem.id !== props.dish.id
+      //if dish on rank exists and user updates it
+      else {
+        userLoggedin.dishes[data.rank] = data.id;
+        console.log(
+          users,
+          userLoggedin,
+          "if dish on rank exists and user updates it"
         );
-        dishToUpdate.rank = rank; //change rank of the dish
-        userLoggedin.dishes = [...filteredDishesArray, dishToUpdate]; //add to the user data
-      } else {
-        //else if dish doesn't exist add rank in variable of dish
-        dish.rank = rank;
-        userLoggedin.dishes.push(dish); //push it to the user data
+        props.updateDishScore(
+          { id: old_value, score: data.rank * -10 },
+          { id: data.id, rank: data.rank * 10 } //update overall scores of dishes
+        );
       }
-    } else {
-      userLoggedin.dishes = []; //if no dishes has been selected whatsoever
-      dish.rank = rank;
-      userLoggedin.dishes.push(dish);
     }
+    console.log(users, userLoggedin, "user data");
 
-    //update the users database
-    if (users) {
-      let filteredUsers = users.filter((elem) => elem.id !== userLoggedin.id);
-      let updatedUsers = [...filteredUsers, userLoggedin]; //add to list of users
-      var ciphertext = CryptoJS.AES.encrypt(
-        JSON.stringify(updatedUsers),
-        "ohmyfood"
-      ).toString();
-      localStorage.setItem("users", ciphertext); //save to localstorage after deciphering if another user logs in ..  state is still saved in storage
-    }
+    //update the user in local storage and redux storage
+    props.updateUser(userLoggedin);
+    //update users in local storage
+    let user = users.find((elem) => elem.id === userLoggedin.id);
+    users = users.filter((elem) => elem.id !== userLoggedin.id);
+    users = [...users, user];
 
-    var ciphertext_user = CryptoJS.AES.encrypt(
+    var ciphertext = CryptoJS.AES.encrypt(
+      JSON.stringify(users),
+      "ohmyfood"
+    ).toString();
+    localStorage.setItem("users", ciphertext);
+
+    //update user in local storage
+
+    var ciphertextUser = CryptoJS.AES.encrypt(
       JSON.stringify(userLoggedin),
       "ohmyfood"
     ).toString();
-    localStorage.setItem("user", ciphertext_user); //save to the user info in localstorage
-    props.updateUser(dish.id, rank); //update to redux store
-    //add to the local storage
-  }; //handle post rank submits
+    localStorage.setItem("user", ciphertextUser);
+  }
 
   return (
     <div className='dish-wrapper'>
@@ -105,55 +81,48 @@ function Dish(props) {
         <div className='dish-name'>{dish.dishName}</div>
         <div className='dish-recipe'>{dish.description}</div>
       </div>
-      {showRating ? (
-        <div className='dish-ranking'>
-          <Button
-            className='rank-btn'
-            style={highlightSelected(1)} //css styling function
-            variant='contained'
-            onClick={() => {
-              setRank(1);
-              handleGiveRank(1);
-            }}
-          >
-            <img
-              src={gold}
-              style={{ height: "40px", width: "40px" }}
-              alt='gold'
-            ></img>
-          </Button>
-          <Button
-            className='rank-btn'
-            style={highlightSelected(2)} //css styling function
-            variant='contained'
-            onClick={() => {
-              setRank(2);
-              handleGiveRank(2);
-            }}
-          >
-            <img
-              style={{ height: "40px", width: "40px" }}
-              src={silver}
-              alt='silver'
-            ></img>
-          </Button>
-          <Button
-            className='rank-btn'
-            style={highlightSelected(3)} //css styling function
-            variant='contained'
-            onClick={() => {
-              setRank(3);
-              handleGiveRank(3);
-            }}
-          >
-            <img
-              src={bronze}
-              style={{ height: "40px", width: "40px" }}
-              alt='bronze'
-            ></img>
-          </Button>
-        </div>
-      ) : null}
+
+      <div className='dish-ranking'>
+        <Button
+          className='rank-btn' //css styling function
+          variant='contained'
+          onClick={() => {
+            handleGiveRank({ id: props.dish.id, rank: 1 });
+          }}
+        >
+          <img
+            src={gold}
+            style={{ height: "40px", width: "40px" }}
+            alt='gold'
+          ></img>
+        </Button>
+        <Button
+          className='rank-btn'
+          variant='contained'
+          onClick={() => {
+            handleGiveRank({ id: props.dish.id, rank: 2 });
+          }}
+        >
+          <img
+            style={{ height: "40px", width: "40px" }}
+            src={silver}
+            alt='silver'
+          ></img>
+        </Button>
+        <Button
+          className='rank-btn'
+          variant='contained'
+          onClick={() => {
+            handleGiveRank({ id: props.dish.id, rank: 3 });
+          }}
+        >
+          <img
+            src={bronze}
+            style={{ height: "40px", width: "40px" }}
+            alt='bronze'
+          ></img>
+        </Button>
+      </div>
     </div>
   );
 }
@@ -166,4 +135,4 @@ export const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { updateUser })(Dish);
+export default connect(mapStateToProps, { updateUser, updateDishScore })(Dish);

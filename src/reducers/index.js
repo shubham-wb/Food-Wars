@@ -37,23 +37,14 @@ const reducer = (state = initialState, action) => {
       };
     }
     case UPDATE_USER_CHOICE: {
-      console.log(action, "action");
-      let user = state.users.find((elem) => elem.id === state.userLoggedin.id);
-      let dish = user.dishes.find((elem) => elem.id === action.dishId);
-      dish.rank = action.rank;
-      let filteredUserArray = user.dishes.filter(
-        (elem) => elem.id !== action.post.id
+      let updated_users = state.users.filter(
+        (user) => user.id !== action.user.id
       );
-      let filteredUsersArray = state.users.filter(
-        (elem) => elem.id !== state.userLoggedin.id
-      );
+
       return {
         ...state,
-        userLoggedin: {
-          ...state.userLoggedin,
-          dishes: [...filteredUserArray, dish],
-        },
-        users: [...filteredUsersArray, user],
+        user: action.user,
+        userLoggedin: [...updated_users, action.user],
       };
     }
 

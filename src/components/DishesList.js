@@ -1,48 +1,45 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-
 import { addDishesToState } from "../actions";
+import { getDishes } from "../utils";
 import Dish from "./Dish";
 
 function DishesList(props) {
   let { userLoggedin } = props;
-
   let [mydishList, setMyDish] = useState([]);
   let [otherDishesList, setOtherDishes] = useState([]);
 
   useEffect(() => {
+    let dishes = getDishes();
     //sort user ranked dishes and other dishes
     let mydish = [];
     let otherDishes = [];
-    if (props.dishes) {
-      for (let i = 0; i < props.dishes.length; i++) {
+    if (dishes) {
+      for (let i = 0; i < dishes.length; i++) {
         if (userLoggedin.dishes) {
-          if (userLoggedin.dishes[0].id === props.dishes[i].id) {
-            console.log(props.dishes[i]);
-            mydish.push(props.dishes[i]);
+          if (userLoggedin.dishes[0].id === dishes[i].id) {
+            mydish.push(dishes[i]);
           } else if (
             userLoggedin.dishes.length > 1 &&
-            userLoggedin.dishes[1].id === props.dishes[i].id
+            userLoggedin.dishes[1].id === dishes[i].id
           ) {
-            console.log(props.dishes[i]);
-            mydish.push(props.dishes[i]);
+            mydish.push(dishes[i]);
           } else if (
             userLoggedin.dishes.length > 2 &&
-            userLoggedin.dishes[2].id === props.dishes[i].id
+            userLoggedin.dishes[2].id === dishes[i].id
           ) {
-            console.log(props.dishes[i]);
-            mydish.push(props.dishes[i]);
+            mydish.push(dishes[i]);
           } else {
-            otherDishes.push(props.dishes[i]);
+            otherDishes.push(dishes[i]);
           }
         } else {
-          otherDishes.push(props.dishes[i]);
+          otherDishes.push(dishes[i]);
         }
       }
       setMyDish(mydish);
       setOtherDishes(otherDishes);
     }
-  }, []);
+  }, [userLoggedin]);
   return (
     <div>
       <h2

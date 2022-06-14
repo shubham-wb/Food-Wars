@@ -54,11 +54,9 @@ const Login = (props) => {
       if (event.key === "Enter") {
         console.log("hua");
         event.preventDefault();
-        console.log(email, password);
-        handleSubmit(event);
       }
     });
-  });
+  }, 2000);
 
   return (
     <>

@@ -3,6 +3,7 @@ export const ADD_DATA_TO_STATE = "ADD_DATA_TO_STATE";
 export const UPDATE_USER_CHOICE = "UPDATE_USER_CHOICE";
 export const ADD_DISHES_TO_STATE = "ADD_DISHES_TO_STATE";
 export const DELETE_DISH = "DELETE_DISH";
+export const UPDATE_DISH_SCORE = "UPDATE_DISH_SCORE";
 export function userLogin(user) {
   return {
     type: USER_LOGIN,
@@ -20,12 +21,10 @@ export function addToState(loggedin, users, dishes) {
   };
 }
 
-export function updateUser(dishId, rank) {
-  console.log(dishId, rank, "action");
+export function updateUser(user) {
   return {
     type: UPDATE_USER_CHOICE,
-    dishId,
-    rank,
+    user,
   };
 }
 
@@ -36,10 +35,10 @@ export function addDishesToState(dishes) {
   };
 }
 
-export function removeDishFromUser(user) {
-  console.log(user);
+export function updateDishScore(oldValue, newValue) {
   return {
-    type: DELETE_DISH,
-    user,
+    type: UPDATE_DISH_SCORE,
+    oldValue,
+    newValue,
   };
 }

@@ -1,41 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button } from "@mui/material";
-import { removeDishFromUser } from "../actions";
 import "../assets/css/MyRankings.css"; //css file
 import gold from "../assets/images/gold.png";
 import silver from "../assets/images/silver.png";
 import bronze from "../assets/images/bronze.png";
-var CryptoJS = require("crypto-js");
+
 //function to display rankings given by logged in user
 function MyRankings(props) {
-  const { userLoggedin, users } = props;
-
-  function handleDeleteFromList(id) {
-    if (userLoggedin) {
-      let updatedDishes = userLoggedin.dishes.filter((elem) => elem.id !== id);
-      userLoggedin.dishes = updatedDishes;
-      let updated_user = userLoggedin;
-      console.log(updated_user, "updated_user");
-      if (users) {
-        let filteredUsers = users.filter((elem) => elem.id !== userLoggedin.id);
-        let updatedUsers = [...filteredUsers, updated_user]; //add to list of users
-        var ciphertext = CryptoJS.AES.encrypt(
-          JSON.stringify(updatedUsers),
-          "ohmyfood"
-        ).toString();
-        localStorage.setItem("users", ciphertext); //save to localstorage after deciphering if another user logs in ..  state is still saved in storage
-      }
-
-      var ciphertext_user = CryptoJS.AES.encrypt(
-        JSON.stringify(updated_user),
-        "ohmyfood"
-      ).toString();
-      localStorage.setItem("user", ciphertext_user); //save to the user info in localstorage
-      props.removeDishFromUser(updated_user); //update to redux store
-      //add to the local storage
-    }
-  }
+  const { userLoggedin } = props;
+  console.log(userLoggedin, "myrankings");
 
   return (
     <div className='user-rankings'>
@@ -63,10 +36,9 @@ function MyRankings(props) {
   );
 }
 const mapStateToProps = (state) => {
-  const { userLoggedin, users } = state;
+  const { userLoggedin } = state;
   return {
     userLoggedin,
-    users,
   };
 };
-export default connect(mapStateToProps, { removeDishFromUser })(MyRankings);
+export default connect(mapStateToProps)(MyRankings);

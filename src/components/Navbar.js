@@ -9,7 +9,10 @@ function Navbar() {
   return (
     <nav>
       <div className='logo'>
-        <img src={buvette} alt='logo' />
+        <img
+          src='https://cdn-icons-png.flaticon.com/512/3496/3496528.png'
+          alt='logo'
+        />
         <h2>
           <Link to='/' style={{ color: "white", textDecoration: "none" }}>
             Buvette™
