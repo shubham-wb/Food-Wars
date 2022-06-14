@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import toast, { Toaster } from "react-hot-toast";
 import { getUser } from "../utils";
@@ -19,6 +19,7 @@ const Login = (props) => {
     e.preventDefault();
     setLoggingIn(true);
     if (!email || !password) {
+      //if email password not entered
       setLoggingIn(false);
       return toast.error("Please add both email and password");
     }
@@ -28,12 +29,9 @@ const Login = (props) => {
       let list_users = localStorage.getItem("users");
       var bytes = CryptoJS.AES.decrypt(list_users, "ohmyfood"); //decrypt userdetails
       var users = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-      console.log(
-        users.find((elem) => loginDetails.id === elem.id),
-        "fasjdfhjk"
-      );
+
       let user =
-        users.find((elem) => loginDetails.id === elem.id) || loginDetails;
+        users.find((elem) => loginDetails.id === elem.id) || loginDetails; //check users database in localstorage if not then add from db
       var ciphertext = CryptoJS.AES.encrypt(
         JSON.stringify(user),
         "ohmyfood"

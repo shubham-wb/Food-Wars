@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+
+//function to display rankings given by logged in user
 function MyRankings(props) {
   const { userLoggedin } = props;
   console.log(userLoggedin, "myrank");

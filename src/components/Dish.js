@@ -11,6 +11,8 @@ function Dish(props) {
   const { dish } = props;
   let [rank, setRank] = useState(0);
 
+  //get if user has already selected 3 items then disable options for selecting
+  //excpet for those which are selected by user
   useEffect(() => {
     if (userLoggedin.dishes) {
       if (userLoggedin.dishes.length === 3) {
@@ -29,6 +31,7 @@ function Dish(props) {
     }
   }, [userLoggedin.dishes, dish.id]);
 
+  //function to highlight the selected rank of particular rank
   function highlightSelected(rank) {
     if (userLoggedin.dishes) {
       let dish = userLoggedin.dishes.find((elem) => elem.id === props.dish.id);
@@ -46,44 +49,47 @@ function Dish(props) {
       }
     }
   }
+
+  //function to handle giving ranks
   const handleGiveRank = (rank) => {
     if (userLoggedin.dishes) {
       let dishToUpdate = userLoggedin.dishes.find(
         (elem) => elem.id === props.dish.id
-      );
+      ); //find dish selected in user data if exists
       if (dishToUpdate) {
         let filteredDishesArray = userLoggedin.dishes.filter(
           (elem) => elem.id !== props.dish.id
         );
-        dishToUpdate.rank = rank;
-        userLoggedin.dishes = [...filteredDishesArray, dishToUpdate];
+        dishToUpdate.rank = rank; //change rank of the dish
+        userLoggedin.dishes = [...filteredDishesArray, dishToUpdate]; //add to the user data
       } else {
-        props.dish.rank = rank;
-        userLoggedin.dishes.push(props.dish);
+        //else if dish doesn't exist add rank in variable of dish
+        dish.rank = rank;
+        userLoggedin.dishes.push(dish); //push it to the user data
       }
     } else {
-      userLoggedin.dishes = [];
-      props.dish.rank = rank;
-      userLoggedin.dishes.push(props.dish);
+      userLoggedin.dishes = []; //if no dishes has been selected whatsoever
+      dish.rank = rank;
+      userLoggedin.dishes.push(dish);
     }
+
     //update the users database
     if (users) {
       let filteredUsers = users.filter((elem) => elem.id !== userLoggedin.id);
-      let updatedUsers = [...filteredUsers, userLoggedin];
-
+      let updatedUsers = [...filteredUsers, userLoggedin]; //add to list of users
       var ciphertext = CryptoJS.AES.encrypt(
         JSON.stringify(updatedUsers),
         "ohmyfood"
       ).toString();
-      localStorage.setItem("users", ciphertext);
+      localStorage.setItem("users", ciphertext); //save to localstorage after deciphering if another user logs in ..  state is still saved in storage
     }
 
-    var ciphertext = CryptoJS.AES.encrypt(
+    var ciphertext_user = CryptoJS.AES.encrypt(
       JSON.stringify(userLoggedin),
       "ohmyfood"
     ).toString();
-    localStorage.setItem("user", ciphertext);
-    updateUser(dish.id, rank);
+    localStorage.setItem("user", ciphertext_user); //save to the user info in localstorage
+    props.updateUser(dish.id, rank); //update to redux store
     //add to the local storage
   }; //handle post rank submits
 
@@ -99,7 +105,7 @@ function Dish(props) {
       {showRating ? (
         <div className='dish-ranking'>
           <Button
-            style={highlightSelected(1)}
+            style={highlightSelected(1)} //css styling function
             variant='contained'
             onClick={() => {
               setRank(1);
@@ -109,7 +115,7 @@ function Dish(props) {
             1
           </Button>
           <Button
-            style={highlightSelected(2)}
+            style={highlightSelected(2)} //css styling function
             variant='contained'
             onClick={() => {
               setRank(2);
@@ -119,7 +125,7 @@ function Dish(props) {
             2
           </Button>
           <Button
-            style={highlightSelected(3)}
+            style={highlightSelected(3)} //css styling function
             variant='contained'
             onClick={() => {
               setRank(3);

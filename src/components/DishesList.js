@@ -6,12 +6,12 @@ import Dish from "./Dish";
 
 function DishesList(props) {
   let { userLoggedin } = props;
-  console.log(userLoggedin);
 
   let [mydishList, setMyDish] = useState([]);
   let [otherDishesList, setOtherDishes] = useState([]);
 
   useEffect(() => {
+    //sort user ranked dishes and other dishes
     let mydish = [];
     let otherDishes = [];
     if (props.dishes) {

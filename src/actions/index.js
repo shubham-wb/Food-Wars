@@ -20,7 +20,7 @@ export function addToState(loggedin, users, dishes) {
 }
 
 export function updateUser(dishId, rank) {
-  console.log(dishId, rank);
+  console.log(dishId, rank, "action");
   return {
     type: UPDATE_USER_CHOICE,
     dishId,
