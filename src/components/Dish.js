@@ -7,43 +7,51 @@ var CryptoJS = require("crypto-js");
 
 function Dish(props) {
   let [showRating, setShowRating] = useState(true);
-  let { userLoggedin } = props;
+  let { userLoggedin, users } = props;
   const { dish } = props;
   let [rank, setRank] = useState(0);
 
   useEffect(() => {
-    if (userLoggedin.dishes.length === 3) {
-      if (dish.id === userLoggedin.dishes[0].id) {
-        setShowRating(true);
-      } else if (dish.id === userLoggedin.dishes[1].id) {
-        setShowRating(true);
-      } else if (dish.id === userLoggedin.dishes[2].id) {
-        setShowRating(true);
+    if (userLoggedin.dishes) {
+      if (userLoggedin.dishes.length === 3) {
+        if (dish.id === userLoggedin.dishes[0].id) {
+          setShowRating(true);
+        } else if (dish.id === userLoggedin.dishes[1].id) {
+          setShowRating(true);
+        } else if (dish.id === userLoggedin.dishes[2].id) {
+          setShowRating(true);
+        } else {
+          setShowRating(false);
+        }
       } else {
-        setShowRating(false);
+        setShowRating(true);
       }
-    } else {
-      setShowRating(true);
     }
-  });
+  }, [userLoggedin.dishes, dish.id]);
 
   function highlightSelected(rank) {
     if (userLoggedin.dishes) {
       let dish = userLoggedin.dishes.find((elem) => elem.id === props.dish.id);
-      if (dish.rank === rank) {
-        return { backgroundColor: "gold", marginTop: "5px" };
-      } else {
-        return {
-          backgroundColor: "white",
-          color: "black",
-          border: "solid 2px blue",
-          marginTop: "5px",
-        };
+      if (dish) {
+        if (dish.rank === rank) {
+          return { backgroundColor: "gold", marginTop: "5px" };
+        } else {
+          return {
+            backgroundColor: "white",
+            color: "black",
+            border: "solid 2px blue",
+            marginTop: "5px",
+          };
+        }
       }
     }
   }
   const handleGiveRank = (rank) => {
     if (userLoggedin.dishes) {
+      if (userLoggedin.dishes.length === 3) {
+        return;
+      }
+
       let dishToUpdate = userLoggedin.dishes.find(
         (elem) => elem.id === props.dish.id
       );
@@ -61,7 +69,19 @@ function Dish(props) {
       userLoggedin.dishes = [];
       props.dish.rank = rank;
       userLoggedin.dishes.push(props.dish);
-    } //update the users database
+    }
+    //update the users database
+    if (users) {
+      let filteredUsers = users.filter((elem) => elem.id !== userLoggedin.id);
+      let updatedUsers = [...filteredUsers, userLoggedin];
+      console.log(updatedUsers);
+      var ciphertext = CryptoJS.AES.encrypt(
+        JSON.stringify(updatedUsers),
+        "ohmyfood"
+      ).toString();
+      localStorage.setItem("users", ciphertext);
+    }
+
     var ciphertext = CryptoJS.AES.encrypt(
       JSON.stringify(userLoggedin),
       "ohmyfood"

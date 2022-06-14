@@ -12,30 +12,36 @@ function DishesList(props) {
   let [otherDishesList, setOtherDishes] = useState([]);
 
   useEffect(() => {
-    console.log(props);
     let mydish = [];
     let otherDishes = [];
-
-    for (let i = 0; i < props.dishes.length; i++) {
-      if (userLoggedin.dishes) {
-        if (userLoggedin.dishes[0].id === props.dishes[i].id) {
-          console.log(props.dishes[i]);
-          mydish.push(props.dishes[i]);
-        } else if (userLoggedin.dishes[1].id === props.dishes[i].id) {
-          console.log(props.dishes[i]);
-          mydish.push(props.dishes[i]);
-        } else if (userLoggedin.dishes[2].id === props.dishes[i].id) {
-          console.log(props.dishes[i]);
-          mydish.push(props.dishes[i]);
+    if (props.dishes) {
+      for (let i = 0; i < props.dishes.length; i++) {
+        if (userLoggedin.dishes) {
+          if (userLoggedin.dishes[0].id === props.dishes[i].id) {
+            console.log(props.dishes[i]);
+            mydish.push(props.dishes[i]);
+          } else if (
+            userLoggedin.dishes.length > 1 &&
+            userLoggedin.dishes[1].id === props.dishes[i].id
+          ) {
+            console.log(props.dishes[i]);
+            mydish.push(props.dishes[i]);
+          } else if (
+            userLoggedin.dishes.length > 2 &&
+            userLoggedin.dishes[2].id === props.dishes[i].id
+          ) {
+            console.log(props.dishes[i]);
+            mydish.push(props.dishes[i]);
+          } else {
+            otherDishes.push(props.dishes[i]);
+          }
         } else {
           otherDishes.push(props.dishes[i]);
         }
-      } else {
-        otherDishes.push(props.dishes[i]);
       }
+      setMyDish(mydish);
+      setOtherDishes(otherDishes);
     }
-    setMyDish(mydish);
-    setOtherDishes(otherDishes);
   }, []);
   return (
     <div>

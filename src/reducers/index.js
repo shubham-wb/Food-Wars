@@ -43,6 +43,7 @@ const reducer = (state = initialState, action) => {
       );
       return {
         ...state,
+        userLoggedin: user,
         users: [filteredArray, user],
       };
     }

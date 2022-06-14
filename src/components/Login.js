@@ -23,14 +23,22 @@ const Login = (props) => {
       return toast.error("Please add both email and password");
     }
 
-    let user = getUser(email, password);
-    if (user) {
-      props.userLogin(user);
-
+    let loginDetails = getUser(email, password);
+    if (loginDetails) {
+      let list_users = localStorage.getItem("users");
+      var bytes = CryptoJS.AES.decrypt(list_users, "ohmyfood"); //decrypt userdetails
+      var users = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      console.log(
+        users.find((elem) => loginDetails.id === elem.id),
+        "fasjdfhjk"
+      );
+      let user =
+        users.find((elem) => loginDetails.id === elem.id) || loginDetails;
       var ciphertext = CryptoJS.AES.encrypt(
         JSON.stringify(user),
         "ohmyfood"
       ).toString();
+      props.userLogin(user);
       localStorage.setItem("user", ciphertext);
       toast.success("signed in successfully");
       navigate("/dashboard/food-wars", { replace: true });
