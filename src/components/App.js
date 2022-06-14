@@ -6,6 +6,7 @@ import Home from "./Home";
 import ScoreBoard from "./ScoreBoard";
 import DashBoard from "./DashBoard";
 import Page404 from "./Page404";
+import Navbar from "./Navbar";
 import { addToState, addDishesToState } from "../actions";
 import { PrivateRoute, RestrictedRoute } from "./authenticatedRoute";
 import { getUsers } from "../utils";
@@ -51,6 +52,7 @@ function App(props) {
 
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route
           exact

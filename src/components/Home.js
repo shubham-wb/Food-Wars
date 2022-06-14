@@ -8,30 +8,6 @@ import arrow from "../assets/images/east.svg";
 function Home() {
   return (
     <div className='home'>
-      <nav>
-        <div className='logo'>
-          <img src={buvette} alt='logo' />
-          <h2>Buvette™</h2>
-        </div>
-        <div
-          style={{
-            marginRight: "20px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Link to='/scoreboard' style={{ textDecoration: "none" }}>
-            <Button
-              className='scoreboard-btn'
-              style={{ color: "white" }}
-              variant='outlined'
-            >
-              ScoreBoard
-            </Button>
-          </Link>
-        </div>
-      </nav>
       <div className='main'>
         <div className='left-section'>
           <div className='context'>

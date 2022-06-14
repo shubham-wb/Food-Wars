@@ -5,7 +5,6 @@ import MyRankings from "./MyRankings";
 function DashBoard() {
   return (
     <div className='Dashboard'>
-      <nav></nav>
       <div className='Dashboard-wrapper'>
         <div className='dashboard-main'>
           <DishesList />
