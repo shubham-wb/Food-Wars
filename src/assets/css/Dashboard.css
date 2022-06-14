@@ -6,11 +6,6 @@
   flex-direction: column;
 }
 
-nav {
-  background-color: skyblue;
-  height: 8%;
-  width: 100%;
-}
 .Dashboard-wrapper {
   background-color: greenyellow;
   height: 92%;
@@ -19,7 +14,7 @@ nav {
   overflow: hidden;
 }
 
-.main {
+.dashboard-main {
   height: 100%;
   width: 70%;
   overflow-y: scroll;

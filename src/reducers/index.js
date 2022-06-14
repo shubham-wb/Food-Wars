@@ -3,6 +3,7 @@ import {
   ADD_DATA_TO_STATE,
   ADD_DISHES_TO_STATE,
   UPDATE_USER_CHOICE,
+  DELETE_DISH,
 } from "../actions";
 
 let initialState = {
@@ -56,6 +57,16 @@ const reducer = (state = initialState, action) => {
       };
     }
 
+    case DELETE_DISH: {
+      let { users, userLoggedin } = state;
+      console.log(userLoggedin, "user_reducer");
+      let filteredUsers = users.filter((elem) => elem.id !== userLoggedin.id);
+      console.log(filteredUsers, "delete dish");
+      return {
+        userLoggedin: action.user,
+        users: [...filteredUsers, action.user],
+      };
+    }
     default: {
       return state;
     }

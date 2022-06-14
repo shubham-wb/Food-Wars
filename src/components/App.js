@@ -24,7 +24,7 @@ function App(props) {
       var bytes = CryptoJS.AES.decrypt(user, "ohmyfood"); //decrypt userdetails
       var userDetails = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     }
-    //get the rannkings of users
+    //get the rankings given by  users from local storage
     let users = localStorage.getItem("users");
     var usersChoices;
     if (users != null) {
@@ -50,32 +50,30 @@ function App(props) {
   }, []);
 
   return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            exact
-            path='/'
-            element={
-              <RestrictedRoute>
-                <Home />
-              </RestrictedRoute>
-            }
-          ></Route>
-          <Route
-            exact
-            path='dashboard/food-wars'
-            element={
-              <PrivateRoute>
-                <DashBoard />
-              </PrivateRoute>
-            }
-          ></Route>
-          <Route exact path='/scoreboard' element={<ScoreBoard />}></Route>
-          <Route path='*' element={<Page404 />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          exact
+          path='/'
+          element={
+            <RestrictedRoute>
+              <Home />
+            </RestrictedRoute>
+          }
+        ></Route>
+        <Route
+          exact
+          path='dashboard/food-wars'
+          element={
+            <PrivateRoute>
+              <DashBoard />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route exact path='/scoreboard' element={<ScoreBoard />}></Route>
+        <Route path='*' element={<Page404 />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -1,9 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+}
 #root {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
 }
 body {
+  background-color: rgb(210, 233, 243);
   height: 100vh;
   width: 100vw;
   overflow: hidden;

@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+.home {
+  height: 100%;
+  width: 100%;
+}
+nav {
+  height: 10vh;
+  background-color: #222751;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: transparent 2px 5px 8px 0px;
+  width: 100vw;
+  font-family: "Roboto Slab", serif;
+}
+
+.main {
+  background: linear-gradient(
+      177deg,
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 1) 100%
+    ),
+    url("https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/black_bean_burrito_bowls_34530_16x9.jpg");
+  background-size: cover;
+
+  height: 90vh;
+  width: 100vw;
+  display: flex;
+}
+
+.left-section {
+  height: 100%;
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.context {
+  height: 80%;
+  width: 80%;
+  margin-top: 15%;
+  margin-left: 20%;
+  color: whitesmoke;
+  display: flex;
+  /* align-items: center; */
+  flex-direction: column;
+}
+.context h2 {
+  font-size: 3rem;
+  font-family: "Pacifico", cursive;
+}
+.context h3 {
+  font-size: 2rem;
+  margin-top: 40px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.context h5 {
+  margin-top: 40px;
+  font-size: 1.4rem;
+  font-family: sans-serif;
+}
+.right-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 30%;
+}
+
+.logo {
+  height: 100%;
+  width: 20%;
+  display: flex;
+  align-items: center;
+}
+.logo img {
+  height: 70%;
+  width: 20%;
+}
+.logo h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: white;
+  height: 100%;
+  width: 80%;
+
+  display: flex;
+  align-items: center;
+}
+a {
+  text-decoration: none;
+}
+.scoreboard-btn {
+  font-weight: 700;
+}
+.scoreboard-btn:hover {
+  color: #222751 !important;
+  background-color: white !important;
+  font-weight: 700;
+}

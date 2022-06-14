@@ -7,7 +7,7 @@ function DashBoard() {
     <div className='Dashboard'>
       <nav></nav>
       <div className='Dashboard-wrapper'>
-        <div className='main'>
+        <div className='dashboard-main'>
           <DishesList />
         </div>
         <div className='aside'>
