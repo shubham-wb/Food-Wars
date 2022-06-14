@@ -45,14 +45,40 @@ function DishesList(props) {
   }, []);
   return (
     <div>
-      <h2>My Dishes</h2>
-      <div>
+      <h2
+        style={{
+          width: "max-content",
+          marginLeft: "60px",
+          marginTop: "20px",
+          borderBottom: "solid 4px Green",
+          marginBottom: "20px",
+          fontFamily: "Poppins , sans-serif",
+          fontWeight: "600",
+          fontSize: "1.3rem",
+        }}
+      >
+        My Dishes
+      </h2>
+      <div className='myDishes'>
         {mydishList.map((dish, index) => (
           <Dish dish={dish} key={`dish-${index}`}></Dish>
         ))}
       </div>
-      <h2>All</h2>
-      <div>
+      <h2
+        style={{
+          width: "max-content",
+          marginLeft: "60px",
+          marginTop: "20px",
+          borderBottom: "solid 4px Green",
+          marginBottom: "20px",
+          fontFamily: "Poppins , sans-serif",
+          fontWeight: "600",
+          fontSize: "1.3rem",
+        }}
+      >
+        All
+      </h2>
+      <div className='other-dishes'>
         {otherDishesList.map((dish, index) => (
           <Dish dish={dish} key={`dish-${index}`}></Dish>
         ))}

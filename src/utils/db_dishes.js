@@ -144,7 +144,7 @@ export const dishes = [
     id: 19,
     dishName: "Mango Mousse",
     description:
-      "Kulfi Ice Cream is an eggless, no-churn Indian ice cream recipe that's incredibly rich, decadent, and easy to make without an ice cream maker. It's pleasantly perfumed with saffron, cardamom, and rosewater, and adorned with an assortment of crunchy nuts.",
+      "Kulfi Ice Cream is an eggless, no-churn Indian ice cream recipe that's incredibly rich, decadent, and easy to make without an ice cream maker.",
     image:
       "http://3.bp.blogspot.com/-n1jN3mGhBcA/U3c_yiqSQkI/AAAAAAAAA2c/o-xZvh2N_O4/s1600/DSCN1894.JPG",
   },

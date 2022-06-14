@@ -3,6 +3,9 @@ import { Button } from "@mui/material";
 import { connect } from "react-redux";
 import "../assets/css/Dish.css";
 import { updateUser } from "../actions";
+import gold from "../assets/images/gold.png";
+import silver from "../assets/images/silver.png";
+import bronze from "../assets/images/bronze.png";
 var CryptoJS = require("crypto-js");
 
 function Dish(props) {
@@ -100,11 +103,12 @@ function Dish(props) {
       </div>
       <div className='dish-description'>
         <div className='dish-name'>{dish.dishName}</div>
-        <div className='dish-description'>{dish.description}</div>
+        <div className='dish-recipe'>{dish.description}</div>
       </div>
       {showRating ? (
         <div className='dish-ranking'>
           <Button
+            className='rank-btn'
             style={highlightSelected(1)} //css styling function
             variant='contained'
             onClick={() => {
@@ -112,9 +116,14 @@ function Dish(props) {
               handleGiveRank(1);
             }}
           >
-            1
+            <img
+              src={gold}
+              style={{ height: "40px", width: "40px" }}
+              alt='gold'
+            ></img>
           </Button>
           <Button
+            className='rank-btn'
             style={highlightSelected(2)} //css styling function
             variant='contained'
             onClick={() => {
@@ -122,9 +131,14 @@ function Dish(props) {
               handleGiveRank(2);
             }}
           >
-            2
+            <img
+              style={{ height: "40px", width: "40px" }}
+              src={silver}
+              alt='silver'
+            ></img>
           </Button>
           <Button
+            className='rank-btn'
             style={highlightSelected(3)} //css styling function
             variant='contained'
             onClick={() => {
@@ -132,7 +146,11 @@ function Dish(props) {
               handleGiveRank(3);
             }}
           >
-            3
+            <img
+              src={bronze}
+              style={{ height: "40px", width: "40px" }}
+              alt='bronze'
+            ></img>
           </Button>
         </div>
       ) : null}

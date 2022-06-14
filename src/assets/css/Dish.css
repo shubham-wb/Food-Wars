@@ -1,26 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
 .dish-wrapper {
-  height: 150px;
+  position: relative;
+  top: 0;
+  height: 180px;
   width: 90%;
-  background-color: aqua;
-  margin-top: 10px;
+  background-color: white;
+  border-radius: 20px;
+  margin-top: 12px;
+  box-shadow: 4px 5px 5px 2px #0000005e;
   display: flex;
+  transition: all 0.5s ease;
 }
 
+.dish-wrapper:hover {
+  transform: scale(1.02);
+  box-shadow: rgb(0 0 0 / 50%) 10px 10px 20px 4px;
+  top: -10px;
+}
 .dish-image {
+  overflow: hidden;
+  border-radius: 20px 0px 0px 20px;
   height: 100%;
-  width: 30%;
-  background-color: yellow;
+  width: 20%;
 }
 
 .dish-image img {
+  border-radius: 20px 0px 0px 20px;
   height: 100%;
   width: 100%;
+  transition: all ease 1s;
+}
+
+.dish-image img:hover {
+  transform: scale(1.5);
 }
 .dish-description {
-  height: 70%;
-  width: 100%;
-}
-.dish-ranking {
+  font-family: Poppins, sans-serif;
   height: 100%;
+  width: 65%;
+  margin-left: 20px;
+  margin-top: 12px;
+}
+
+.dish-ranking {
+  margin-right: 17px;
+  display: flex;
+  height: 100%;
+  justify-content: flex-end;
+  align-items: center;
   width: 20%;
+}
+
+.dish-ranking .rank-btn {
+  background-color: transparent;
+  margin-left: 10px;
+}
+
+.dish-name {
+  margin-bottom: 2px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.dish-recipe {
+  font-size: 0.9rem;
+  width: 70%;
+  word-wrap: normal;
 }

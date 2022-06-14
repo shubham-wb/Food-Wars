@@ -1,0 +1,42 @@
+.user-rankings {
+  margin-top: 140px;
+  height: 350px;
+  width: 300px;
+  border-radius: 20px;
+  box-shadow: 10px 10px 10px 3px gray;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-ranking-wrapper {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-family: Poppins, sans-serif;
+}
+
+.rank-list {
+  display: flex;
+  height: 70%;
+  width: 100%;
+}
+.rank-element {
+  font-family: Poppins, sans-serif;
+  margin-top: 20px;
+  height: 40px;
+  width: 80%;
+  display: flex;
+}
+.rank-medals {
+  margin-left: 20px;
+  height: 100%;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+}
+.rank-medals img {
+  margin-top: 20px;
+  height: 40px;
+  width: 40px;
+}

@@ -7,7 +7,7 @@
 }
 
 .Dashboard-wrapper {
-  background-color: greenyellow;
+  background-color: whitesmoke;
   height: 92%;
   width: 100%;
   display: flex;
@@ -19,7 +19,22 @@
   width: 70%;
   overflow-y: scroll;
 }
+
+.dashboard-main::-webkit-scrollbar {
+  visibility: hidden;
+}
 .aside {
   height: 100%;
   width: 30%;
+}
+.myDishes {
+  margin-left: 60px;
+  width: 90%;
+  height: 30%;
+}
+
+.other-dishes {
+  margin-left: 60px;
+  width: 90%;
+  height: 70%;
 }
