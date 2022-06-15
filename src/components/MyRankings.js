@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import "../assets/css/MyRankings.css"; //css file
 import { getDishes } from "../utils";
@@ -9,7 +9,23 @@ import bronze from "../assets/images/bronze.png";
 //function to display rankings given by logged in user
 function MyRankings(props) {
   const { userLoggedin } = props;
-  let dishes = getDishes();
+  let [List, setList] = useState([]);
+
+  useEffect(() => {
+    let dishes = getDishes();
+    let mydish = [];
+    if (userLoggedin) {
+      for (let i = 1; i < 4; i++) {
+        if (userLoggedin.dishes[i] === 0) {
+          mydish.push(null);
+          continue;
+        }
+        mydish.push(dishes[userLoggedin.dishes[i] - 1]);
+      }
+      setList(mydish);
+    }
+  }, [props.userLoggedin]);
+  console.log(List);
   return (
     <div className='user-rankings'>
       <div className='user-ranking-wrapper'>My Selection</div>
@@ -21,16 +37,39 @@ function MyRankings(props) {
           <img src={bronze} alt='bronze'></img>
         </div>
         <div style={{ height: "100%", width: "70%" }}>
-          {userLoggedin.dishes
-            ? userLoggedin.dishes
-                .sort((a, b) => a.id - b.id)
-                .map((dish, index) =>
-                  dish === 0 || dish === false || dish === true ? null : (
-                    <div className='rank-element' key={`mydish-${index}`}>
-                      {dishes[dish - 1].dishName}
-                    </div>
-                  )
-                )
+          {List
+            ? List.map((elem, index) => {
+                return elem ? (
+                  <div
+                    style={{
+                      height: "40px",
+                      width: "100%",
+                      margin: "20px",
+                      marginLeft: "5px",
+                      fontFamily: "Poppins ,sans-serif",
+                      textAlign: "center",
+                    }}
+                    key={`my-dish-${index}`}
+                  >
+                    {elem.dishName}
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      fontFamily: "Poppins ,sans-serif",
+
+                      fontSize: "1.2rem",
+                      textAlign: "center",
+                      height: "40px",
+                      width: "100%",
+                      margin: "20px",
+                      marginLeft: "5px",
+                    }}
+                  >
+                    ---
+                  </div>
+                );
+              })
             : null}
         </div>
       </div>
