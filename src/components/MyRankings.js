@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import "../assets/css/MyRankings.css"; //css file
+import { getDishes } from "../utils";
 import gold from "../assets/images/gold.png";
 import silver from "../assets/images/silver.png";
 import bronze from "../assets/images/bronze.png";
@@ -8,8 +9,7 @@ import bronze from "../assets/images/bronze.png";
 //function to display rankings given by logged in user
 function MyRankings(props) {
   const { userLoggedin } = props;
-  console.log(userLoggedin, "myrankings");
-
+  let dishes = getDishes();
   return (
     <div className='user-rankings'>
       <div className='user-ranking-wrapper'>My Selection</div>
@@ -24,11 +24,13 @@ function MyRankings(props) {
           {userLoggedin.dishes
             ? userLoggedin.dishes
                 .sort((a, b) => a.id - b.id)
-                .map((dish, index) => (
-                  <div className='rank-element' key={`mydish-${index}`}>
-                    {dish.dishName}
-                  </div>
-                ))
+                .map((dish, index) =>
+                  dish === 0 || dish === false || dish === true ? null : (
+                    <div className='rank-element' key={`mydish-${index}`}>
+                      {dishes[dish - 1].dishName}
+                    </div>
+                  )
+                )
             : null}
         </div>
       </div>

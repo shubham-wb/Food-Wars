@@ -9,8 +9,7 @@ import Page404 from "./Page404";
 import Navbar from "./Navbar";
 import { addToState, addDishesToState } from "../actions";
 import { PrivateRoute, RestrictedRoute } from "./authenticatedRoute";
-import { getUsers } from "../utils";
-
+import { getUsers, getDishes } from "../utils";
 var CryptoJS = require("crypto-js");
 
 function App(props) {
@@ -30,7 +29,7 @@ function App(props) {
       usersChoices = JSON.parse(users_bytes.toString(CryptoJS.enc.Utf8));
     } else {
       usersChoices = getUsers();
-      console.log(users);
+
       var ciphertext = CryptoJS.AES.encrypt(
         JSON.stringify(usersChoices),
         "ohmyfood"
@@ -40,10 +39,11 @@ function App(props) {
     //get the scores of dishes
     let dishes = localStorage.getItem("dishes");
     if (dishes != null) {
-      var dishes_bytes = CryptoJS.AES.decrypt(user, "ohmyfood"); //decrypt userdetails
+      var dishes_bytes = CryptoJS.AES.decrypt(dishes, "ohmyfood"); //decrypt userdetails
       var dishScores = JSON.parse(dishes_bytes.toString(CryptoJS.enc.Utf8));
+    } else {
+      dishScores = getDishes();
     }
-
     props.addToState(userDetails, usersChoices, dishScores);
   }, []);
 

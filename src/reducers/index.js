@@ -3,9 +3,10 @@ import {
   ADD_DATA_TO_STATE,
   ADD_DISHES_TO_STATE,
   UPDATE_USER_CHOICE,
-  DELETE_DISH,
+  UPDATE_DISH_SCORE,
 } from "../actions";
-
+const _ = require("lodash");
+var CryptoJS = require("crypto-js");
 let initialState = {
   userLoggedin: {},
   users: {},
@@ -18,7 +19,7 @@ const reducer = (state = initialState, action) => {
     case USER_LOGIN: {
       return {
         ...state,
-        user: action.user,
+        userLoggedin: action.user,
       };
     }
 
@@ -29,35 +30,56 @@ const reducer = (state = initialState, action) => {
       };
     }
     case ADD_DATA_TO_STATE: {
+      var updatedScore;
+      if (action.dishes) {
+        updatedScore = action.dishes;
+      } else {
+        updatedScore = [];
+      }
       return {
         ...state,
         userLoggedin: action.loggedin || {},
         users: action.users || {},
-        dishesScores: action.dishes || {},
+        dishesScores: updatedScore,
       };
     }
     case UPDATE_USER_CHOICE: {
-      let updated_users = state.users.filter(
+      var new_users = _.cloneDeep(state.users);
+      // let new_users = JSON.stringify(JSON.parse(state.users));
+      let updated_users = new_users.filter(
         (user) => user.id !== action.user.id
       );
+      console.log(action.user, "yeh updated user hai reducer me  ");
+      return {
+        ...state,
+        userLoggedin: { ...action.user },
+        users: [...updated_users, action.user],
+      };
+    }
+
+    case UPDATE_DISH_SCORE: {
+      let old_value = action.oldValue;
+      let new_value = action.newValue;
+
+      console.log("old", old_value, "new", new_value, "oldandnew");
+      var filteredDishes = JSON.parse(JSON.stringify(state.dishesScores));
+      if (old_value) {
+        filteredDishes[old_value.id].score += old_value.score;
+      } else if (new_value) {
+        filteredDishes[new_value.id - 1].score += new_value.score;
+      }
+      // var ciphertext = CryptoJS.AES.encrypt(
+      //   JSON.stringify(filteredDishes),
+      //   "ohmyfood"
+      // ).toString();
+      // localStorage.setItem("dishes", ciphertext);
 
       return {
         ...state,
-        user: action.user,
-        userLoggedin: [...updated_users, action.user],
+        dishesScores: [...filteredDishes],
       };
     }
 
-    case DELETE_DISH: {
-      let { users, userLoggedin } = state;
-      console.log(userLoggedin, "user_reducer");
-      let filteredUsers = users.filter((elem) => elem.id !== userLoggedin.id);
-      console.log(filteredUsers, "delete dish");
-      return {
-        userLoggedin: action.user,
-        users: [...filteredUsers, action.user],
-      };
-    }
     default: {
       return state;
     }

@@ -1,11 +1,8 @@
-import React, { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import Button from "@mui/material/Button";
-import buvette from "../assets/images/Buvette.svg";
-function Navbar() {
-  let location = useLocation();
-  console.log(location);
-
+function Navbar(props) {
   return (
     <nav>
       <div className='logo'>
@@ -36,7 +33,7 @@ function Navbar() {
             ScoreBoard
           </Button>
         </Link>
-        {location.pathname === "/" ? null : (
+        {props.username ? (
           <Button
             onClick={() => {
               localStorage.removeItem("user");
@@ -45,10 +42,13 @@ function Navbar() {
           >
             Logout
           </Button>
-        )}
+        ) : null}
       </div>
     </nav>
   );
 }
 
-export default Navbar;
+const mapStateToProps = (state) => {
+  return state.userLoggedin;
+};
+export default connect(mapStateToProps)(Navbar);

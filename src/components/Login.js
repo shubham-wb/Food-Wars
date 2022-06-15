@@ -31,28 +31,30 @@ const Login = (props) => {
       let list_users = localStorage.getItem("users");
       var bytes = CryptoJS.AES.decrypt(list_users, "ohmyfood"); //decrypt userdetails
       var users = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-
-      let user =
-        users.find((elem) => loginDetails.id === elem.id) || loginDetails; //check users database in localstorage if not then add from db
+      let user = users.find((elem) => loginDetails.id === elem.id); //check users database in localstorage if not then add from db
+      if (!user) {
+        user = loginDetails;
+      }
       var ciphertext = CryptoJS.AES.encrypt(
         JSON.stringify(user),
         "ohmyfood"
       ).toString();
       props.userLogin(user);
       localStorage.setItem("user", ciphertext);
-      toast.success("signed in successfully");
-      navigate("/dashboard/food-wars", { replace: true });
+      setTimeout(() => {
+        setLoggingIn(false);
+        toast.success("signed in successfully");
+        navigate("/dashboard/food-wars", { replace: true });
+      }, 1000);
     } else {
       toast.error("Umm ! we cannot log you in ");
       setLoggingIn(false);
     }
-    setLoggingIn(false);
   };
 
   setTimeout(() => {
     document.addEventListener("keypress", function (event) {
       if (event.key === "Enter") {
-        console.log("hua");
         event.preventDefault();
       }
     });
@@ -179,7 +181,7 @@ const Login = (props) => {
             {loggingIn ? (
               <>
                 Login
-                <div className='loader'>
+                <div className='login-loader'>
                   <div></div>
                   <div></div>
                   <div></div>

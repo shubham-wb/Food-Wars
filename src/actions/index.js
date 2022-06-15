@@ -12,7 +12,6 @@ export function userLogin(user) {
 }
 
 export function addToState(loggedin, users, dishes) {
-  console.log(loggedin, users, dishes);
   return {
     type: ADD_DATA_TO_STATE,
     loggedin,
@@ -22,6 +21,7 @@ export function addToState(loggedin, users, dishes) {
 }
 
 export function updateUser(user) {
+  console.log(user, "action");
   return {
     type: UPDATE_USER_CHOICE,
     user,

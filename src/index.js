@@ -10,7 +10,6 @@ import rootReducer from "./reducers";
 const store = configureStore({
   reducer: rootReducer,
 });
-console.log(store.getState());
 //creating a store for state management
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

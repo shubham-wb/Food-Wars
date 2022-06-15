@@ -5,41 +5,46 @@ import { getDishes } from "../utils";
 import Dish from "./Dish";
 
 function DishesList(props) {
-  let { userLoggedin } = props;
+  var userDetails;
+  if (props.userLoggedin) {
+    userDetails = JSON.parse(JSON.stringify(props.userLoggedin));
+  }
+
   let [mydishList, setMyDish] = useState([]);
   let [otherDishesList, setOtherDishes] = useState([]);
 
   useEffect(() => {
     let dishes = getDishes();
+    props.addDishesToState(dishes);
     //sort user ranked dishes and other dishes
     let mydish = [];
     let otherDishes = [];
-    if (dishes) {
-      for (let i = 0; i < dishes.length; i++) {
-        if (userLoggedin.dishes) {
-          if (userLoggedin.dishes[0].id === dishes[i].id) {
-            mydish.push(dishes[i]);
-          } else if (
-            userLoggedin.dishes.length > 1 &&
-            userLoggedin.dishes[1].id === dishes[i].id
-          ) {
-            mydish.push(dishes[i]);
-          } else if (
-            userLoggedin.dishes.length > 2 &&
-            userLoggedin.dishes[2].id === dishes[i].id
-          ) {
-            mydish.push(dishes[i]);
-          } else {
-            otherDishes.push(dishes[i]);
-          }
-        } else {
-          otherDishes.push(dishes[i]);
+
+    if (userDetails && dishes) {
+      for (let i = 1; i < 4; i++) {
+        if (userDetails.dishes[i] === 0) {
+          continue;
         }
+        mydish.push(dishes[userDetails.dishes[i] - 1]);
       }
-      setMyDish(mydish);
-      setOtherDishes(otherDishes);
     }
-  }, [userLoggedin]);
+
+    for (let i = 0; i < dishes.length; i++) {
+      if (dishes[i].id === userDetails.dishes[1]) {
+        continue;
+      }
+      if (dishes[i].id === userDetails.dishes[2]) {
+        continue;
+      }
+      if (dishes[i].id === userDetails.dishes[3]) {
+        continue;
+      }
+
+      otherDishes.push(dishes[i]);
+    }
+    setMyDish(mydish);
+    setOtherDishes(otherDishes);
+  }, [props.userLoggedin]);
   return (
     <div>
       <h2
@@ -85,10 +90,10 @@ function DishesList(props) {
 }
 
 const mapStateToProps = (state) => {
-  const { userLoggedin, dishes } = state;
+  const { userLoggedin, users } = state;
   return {
     userLoggedin,
-    dishes,
+    users,
   };
 };
 
