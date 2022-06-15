@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Food-Wars/static/css/main.40d8eff1.css",
-    "main.js": "/Food-Wars/static/js/main.e5321821.js",
+    "main.js": "/Food-Wars/static/js/main.27e71d57.js",
     "static/media/score_board.jpg": "/Food-Wars/static/media/score_board.2be25b30d6fc89ba410f.jpg",
     "static/media/login_bg.png": "/Food-Wars/static/media/login_bg.0b1908ff1b34e4fbd41c.png",
     "static/media/bronze.png": "/Food-Wars/static/media/bronze.a6118719e0113ec6d7da.png",
@@ -11,10 +11,10 @@
     "index.html": "/Food-Wars/index.html",
     "static/media/east.svg": "/Food-Wars/static/media/east.3244824f670d08f0d1171eba3b592ae1.svg",
     "main.40d8eff1.css.map": "/Food-Wars/static/css/main.40d8eff1.css.map",
-    "main.e5321821.js.map": "/Food-Wars/static/js/main.e5321821.js.map"
+    "main.27e71d57.js.map": "/Food-Wars/static/js/main.27e71d57.js.map"
   },
   "entrypoints": [
     "static/css/main.40d8eff1.css",
-    "static/js/main.e5321821.js"
+    "static/js/main.27e71d57.js"
   ]
 }
