@@ -1,27 +1,32 @@
 import React from "react";
 import "../assets/css/ScoreBoard.css";
 import { connect } from "react-redux";
+import { getDishes } from "../utils";
 var CryptoJS = require("crypto-js");
-let user, bytes;
+let user, bytes, dishes_bytes;
 function ScoreBoard(props) {
   user = localStorage.getItem("user");
-  if (user !== null) {
+  if (user) {
     bytes = CryptoJS.AES.decrypt(user, "ohmyfood"); //decrypt userdetails
   }
   var userSignedin;
   if (props.userSignedin) {
     userSignedin = props.userSignedin;
-  } else if (bytes != undefined) {
+  } else if (bytes) {
     userSignedin = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
   }
 
   let dishesStored = localStorage.getItem("dishes");
-  var dishes_bytes = CryptoJS.AES.decrypt(dishesStored, "ohmyfood"); //decrypt userdetails
+  if (dishesStored) {
+    dishes_bytes = CryptoJS.AES.decrypt(dishesStored, "ohmyfood"); //decrypt userdetails
+  }
   var dishes;
   if (Array.isArray(props.dishesScores)) {
     dishes = [...props.dishesScores];
-  } else {
+  } else if (dishes_bytes) {
     dishes = JSON.parse(dishes_bytes.toString(CryptoJS.enc.Utf8));
+  } else {
+    dishes = getDishes();
   }
   return (
     <div className='scoreboard-wrapper'>
