@@ -86,45 +86,26 @@ function Dish(props) {
           score: (4 - data.rank) * 10,
         });
         //update overall scores of dishes
-      }
-      //if user has dishes
-      else {
-        let old_value = userSignedin.dishes[data.rank]; // get the value of dish id to be replaced on the same rank
-        if (old_value === data.id) {
-          //if user unselected the dish
-          if (old_value.rank === data.rank) {
-            selectedBtn(null, data.rank); // send rank to change background of unselected one
-            let index = userSignedin.dishes.indexOf(data.id);
-
-            userSignedin.dishes.splice(index, 1); // remove that element from the place
-
-            console.log("he has selected same button");
+      } else {
+        let prev_index_same_dish = userSignedin.dishes.indexOf(data.id);
+        if (prev_index_same_dish !== -1) {
+          if (prev_index_same_dish === data.rank) {
+            //if user has unselected the dish
+            userSignedin.dishes[prev_index_same_dish] = 0;
             props.updateDishScore(
-              { id: old_value, score: (4 - data.rank) * -10 },
+              { id: data.id, score: (4 - data.rank) * -10 },
               null
             );
-          } //update the score of dish by subtracting its position value
-
-          //else if
-          else {
-            console.log(
-              "this is case 22 . he has selected different position but same dish"
-            );
-            let index = userSignedin.dishes.indexOf(data.id);
-
-            userSignedin.dishes.splice(index, 1); // remove that element from the place
+          } else {
+            userSignedin.dishes[prev_index_same_dish] = 0;
             userSignedin.dishes[data.rank] = data.id;
-
-            index = 4 - userSignedin.dishes.indexOf(data.id);
-
             props.updateDishScore(
-              { id: old_value, score: (4 - data.rank) * -10 },
-              { id: data.id, score: (4 - data.rank) * 10 - index * 10 } //update overall scores of dishes
+              { id: data.id, score: (4 - data.prev_index_same_dish) * -10 },
+              { id: data.id, score: (4 - data.rank) * 10 } //update overall scores of dishes
             );
           }
-        }
-        //if dish on rank exists and user updates it
-        else {
+        } else {
+          let old_value = userSignedin.dishes[data.rank];
           userSignedin.dishes[data.rank] = data.id;
           props.updateDishScore(
             { id: old_value, score: (4 - data.rank) * -10 },
@@ -132,22 +113,22 @@ function Dish(props) {
           );
         }
       }
+
       // update the user in local storage and redux storage
       props.updateUser(userSignedin);
       // update users in local storage
       // users = [...new_users, userSignedin];
-      console.log("details", userSignedin.dishes);
-      // var ciphertext = CryptoJS.AES.encrypt(
-      //   JSON.stringify(users),
-      //   "ohmyfood"
-      // ).toString();
-      // localStorage.setItem("users", ciphertext);
-      // // update user in local storage
-      // var ciphertextUser = CryptoJS.AES.encrypt(
-      //   JSON.stringify(userSignedin),
-      //   "ohmyfood"
-      // ).toString();
-      // localStorage.setItem("user", ciphertextUser);
+      //     // var ciphertext = CryptoJS.AES.encrypt(
+      //     //   JSON.stringify(users),
+      //     //   "ohmyfood"
+      //     // ).toString();
+      //     // localStorage.setItem("users", ciphertext);
+      //     // // update user in local storage
+      //     // var ciphertextUser = CryptoJS.AES.encrypt(
+      //     //   JSON.stringify(userSignedin),
+      //     //   "ohmyfood"
+      //     // ).toString();
+      //     // localStorage.setItem("user", ciphertextUser);
     }
   }
 

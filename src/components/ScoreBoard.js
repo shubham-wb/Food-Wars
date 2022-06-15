@@ -3,7 +3,6 @@ import "../assets/css/ScoreBoard.css";
 import { connect } from "react-redux";
 function ScoreBoard(props) {
   let dishes = [...props.dishesScores];
-  console.log(props.dishesScores, "dishScores");
   return (
     <div className='scoreboard-wrapper'>
       <div className='scoreboard'>

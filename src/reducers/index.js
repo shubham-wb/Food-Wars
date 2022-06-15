@@ -49,7 +49,6 @@ const reducer = (state = initialState, action) => {
       let updated_users = new_users.filter(
         (user) => user.id !== action.user.id
       );
-      console.log(action.user, "yeh updated user hai reducer me  ");
       return {
         ...state,
         userLoggedin: { ...action.user },
@@ -61,7 +60,6 @@ const reducer = (state = initialState, action) => {
       let old_value = action.oldValue;
       let new_value = action.newValue;
 
-      console.log("old", old_value, "new", new_value, "oldandnew");
       var filteredDishes = JSON.parse(JSON.stringify(state.dishesScores));
       if (old_value) {
         filteredDishes[old_value.id].score += old_value.score;
