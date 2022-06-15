@@ -59,18 +59,21 @@ const reducer = (state = initialState, action) => {
     case UPDATE_DISH_SCORE: {
       let old_value = action.oldValue;
       let new_value = action.newValue;
-
+      console.log("old:", old_value, "new:", new_value);
       var filteredDishes = JSON.parse(JSON.stringify(state.dishesScores));
-      if (old_value) {
-        filteredDishes[old_value.id].score += old_value.score;
-      } else if (new_value) {
+      if (old_value && old_value.id !== 0) {
+        filteredDishes[old_value.id - 1].score = Math.abs(
+          filteredDishes[old_value.id - 1].score - old_value.score
+        );
+      }
+      if (new_value) {
         filteredDishes[new_value.id - 1].score += new_value.score;
       }
-      // var ciphertext = CryptoJS.AES.encrypt(
-      //   JSON.stringify(filteredDishes),
-      //   "ohmyfood"
-      // ).toString();
-      // localStorage.setItem("dishes", ciphertext);
+      var ciphertext = CryptoJS.AES.encrypt(
+        JSON.stringify(filteredDishes),
+        "ohmyfood"
+      ).toString();
+      localStorage.setItem("dishes", ciphertext);
 
       return {
         ...state,

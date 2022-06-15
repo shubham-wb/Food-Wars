@@ -25,7 +25,7 @@ function MyRankings(props) {
       setList(mydish);
     }
   }, [props.userLoggedin]);
-  console.log(List);
+
   return (
     <div className='user-rankings'>
       <div className='user-ranking-wrapper'>My Selection</div>
@@ -55,9 +55,9 @@ function MyRankings(props) {
                   </div>
                 ) : (
                   <div
+                    key={`my-dish-${index}`}
                     style={{
                       fontFamily: "Poppins ,sans-serif",
-
                       fontSize: "1.2rem",
                       textAlign: "center",
                       height: "40px",

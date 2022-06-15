@@ -37,7 +37,7 @@ function Navbar(props) {
           <Button
             onClick={() => {
               localStorage.removeItem("user");
-              window.location.reload();
+              window.location.href = "/";
             }}
           >
             Logout
