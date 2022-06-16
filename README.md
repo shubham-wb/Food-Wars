@@ -1,5 +1,9 @@
 ### Live Demo ----> https://beamish-dodol-7eb171.netlify.app/
 
+username :amar 
+password: amar123
+
+
 ### `npm intall` 
 
 to install all dependencies required 
